@@ -85,7 +85,7 @@ router.patch('/:id', (req, res) => {
   if (errores.length > 0) {
     return res.status(400).json({ error: 'Validaciones fallidas', detalles: errores });
   }
-  clienteTareas.ActualizarTareaParcial(datos, (error, respuesta) => {
+  clienteTareas.ActualizarTarea(datos, (error, respuesta) => {
     if (error) {
       manejarErrorGrpc(error, res);
     } else {
