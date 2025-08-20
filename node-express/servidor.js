@@ -1,4 +1,7 @@
 import express from 'express';
+// Importa el cliente gRPC usando ES Modules
+
+import tareasRouter from './rutas/tareas.js';
 
 const aplicacion = express();
 const PUERTO = process.env.PORT || 3000;
@@ -15,21 +18,11 @@ aplicacion.get('/', (peticion, respuesta) => {
   });
 });
 
-aplicacion.get('/', (peticion, respuesta) => {
-  respuesta.json({ 
-    estado: 'ok',
-    servicio: 'Gateway Tareas Express',
-    version: '1.0.0'
-  });
-});
 
-// TODO: Aquí deben implementar las rutas para tareas:
-// GET /tareas - Listar tareas
-// GET /tareas/:id - Obtener tarea por ID
-// POST /tareas - Crear nueva tarea
-// PUT /tareas/:id - Actualizar tarea completa
-// PATCH /tareas/:id - Actualizar tarea parcial
-// DELETE /tareas/:id - Eliminar tarea
+// Usar el router de tareas para todos los endpoints /tareas
+aplicacion.use('/tareas', tareasRouter);
+
+
 
 aplicacion.listen(PUERTO, () => {
   console.log(`🚀 Servidor Express iniciado en puerto ${PUERTO}`);

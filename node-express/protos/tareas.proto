@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package tareas;
+
+import "google/protobuf/wrappers.proto";
+
+message Tarea {
+  string id = 1;
+  string titulo = 2;
+  string descripcion = 3;
+  int32 prioridad = 4;
+  bool completada = 5;
+  string fecha_creacion = 6;
+  string fecha_actualizacion = 7;
+}
+
+message ObtenerTareaRequest { string id = 1; }
+message ListarTareasRequest { int32 limite = 1; int32 desplazamiento = 2; }
+message ListarTareasResponse { repeated Tarea datos = 1; int32 total = 2; }
+
+message CrearTareaRequest {
+  string titulo = 1;
+  string descripcion = 2;
+  int32 prioridad = 3;
+  bool completada = 4;
+}
+message ActualizarTareaRequest {
+  string id = 1;
+  string titulo = 2;
+  string descripcion = 3;
+  int32 prioridad = 4;
+  bool completada = 5;
+}
+message ModificarTareaRequest {
+  string id = 1;
+  google.protobuf.StringValue titulo = 2;
+  google.protobuf.StringValue descripcion = 3;
+  google.protobuf.Int32Value prioridad = 4;
+  google.protobuf.BoolValue completada = 5;
+}
+message EliminarTareaRequest { string id = 1; }
+message Vacio {}
+
+service ServicioTareas {
+  rpc ObtenerTarea(ObtenerTareaRequest) returns (Tarea);
+  rpc ListarTareas(ListarTareasRequest) returns (ListarTareasResponse);
+  rpc CrearTarea(CrearTareaRequest) returns (Tarea);
+  rpc ActualizarTarea(ActualizarTareaRequest) returns (Tarea);
+  rpc ModificarTarea(ModificarTareaRequest) returns (Tarea);
+  rpc EliminarTarea(EliminarTareaRequest) returns (Vacio);
+}
